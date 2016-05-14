@@ -7,7 +7,7 @@
 		<title>BHP Hackathon 2016 - Team Mother Load</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/night.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -23,35 +23,35 @@
 
 		<style>
 
-		.people {
-			display: inline-block;
-		}
+			.people {
+				display: inline-block;
+			}
 
-		.people figure {
-			display: inline-block;
-		}
+			.people figure {
+				display: inline-block;
+			}
 
-		.people figcaption {
-			font-size: 14pt;
-			text-align: center;
-		}
+			.people figcaption {
+				font-size: 14pt;
+				text-align: center;
+			}
 
-		.people figure img {
-				width: 120px;
-				height: 120px;
-				border-radius: 120px;
-				-webkit-border-radius: 120px;
-				-moz-border-radius: 120px;
-				box-shadow: 0 0 0px rgba(0, 0, 0, .2);
-				-webkit-box-shadow: 0 0 0px rgba(0, 0, 0, .2);
-				-moz-box-shadow: 0 0 0px rgba(0, 0, 0, .2);
-		}
+			.people figure img {
+					width: 120px;
+					height: 120px;
+					border-radius: 120px;
+					-webkit-border-radius: 120px;
+					-moz-border-radius: 120px;
+					box-shadow: 0 0 0px rgba(0, 0, 0, .2);
+					-webkit-box-shadow: 0 0 0px rgba(0, 0, 0, .2);
+					-moz-box-shadow: 0 0 0px rgba(0, 0, 0, .2);
+			}
 
-		/* D3 Styles */
-		rect {
-  			stroke: #fff;
-  			stroke-width: .1px;
-		}
+			span.big {
+				font-size: 100px;
+				font-weight: bold;
+				padding: 30px;
+			}
 
 		</style>
 
@@ -74,18 +74,45 @@
 				<section>
 					<img data-src="img/loader-minestar.png"/>
 				</section>
-				<section>
+				<section data-background="img/overwhelmed.gif">
+					<span class="big">TOO MUCH INFO</span>
+				</section>
+				<!--section>
 					<h2>Less is More</h2>
 					<p class="fragment">Do we have what we need?</p>
 					<p class="fragment">Do we need what we have?</p>
+					<aside class="notes">
+        				Like any good solution. Simple is better. Less is more.
+    				</aside>
+				</section-->
+				<section>
+					<q>
+						<p>"Everything Should Be Made as Simple as Possible, But Not Simpler"</p>
+						<span style="text-align: right">- Albert Einstein</span>
+					</q>
+					<aside class="notes">
+						<p>Believe that Less is More</p>
+						<ul>
+							<li>Do we have what we need?</li>
+							<li>Do we need what we have?</li>
+						</ul>
+					</aside>
 				</section>
-				<section data-background="img/ferrari-cockpit.jpg"></section>
-				<!--section data-background="img/redbull-timing.jpg"></section-->
+				<!--section data-background="img/ferrari-cockpit.jpg">
+					<aside class="notes">
+        				Just like a race car driver. 
+    				</aside>
+				</section-->
 				<section>
 					<section>
 						<h2>Dynamic Contextual Display</h2>
+						<p class="fragment">Only the most important information</p>
+						<p class="fragment">Relevant to the current task</p>
+						<aside class="notes">
+
+						</aside>
 					</section>
-					<section>
+					<section data-state="loading-demo">
 						<p>Loading Phase</p>
 						<p>
 							<svg width="800" height="300">
@@ -147,10 +174,15 @@
 				</section>
 				<section>
 					<section>
-						<h3>Peripheral Visual Cue</h3>
+						<h2>Peripheral Visual Cue</h2>
+						<p class="fragment">Progress in relation to optimal filling plan</p>
+						<p class="fragment">Unobtrusive</p>
+						<p class="fragment">Adapts in real-time</p>
 					</section>
+					<section data-background="img/distraction.gif"></section>
 					<section>
-						Video or Live Demo
+
+					</section>
 					</section>
 				</section>
 				<section>
@@ -173,7 +205,6 @@
 			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
 				history: true,
-				
 
 				// More info https://github.com/hakimel/reveal.js#dependencies
 				dependencies: [
@@ -185,48 +216,52 @@
 				]
 			});
 
-			var seconds = 200;
-			var stopwatch = d3.select("#stopwatch");
+			var demo1 = false;
+			Reveal.addEventListener( 'loading-demo', function() {
 
-			function pad(num, size) {
-				var s = "0000" + num;
-				return s.substr(s.length - size);
-			}
+				// Only start animating once when the slide appears
+    			if(demo1) return;
+    				demo1 = true;
 
-			function decrement() {
-				seconds = seconds - 1;
-				min = Math.round(seconds / 60);
-				sec = seconds % 60;
-				stopwatch.text(pad(min,2) + ":" + pad(sec,2));
-				timer();
-			}
+    			var seconds = 200;
+				var stopwatch = d3.select("#stopwatch");
 
-			function timer() {
-    			t = setTimeout(decrement, 1000);
-			}
-			timer(); // start countdown
+				function pad(num, size) {
+					var s = "0000" + num;
+					return s.substr(s.length - size);
+				}
 
-			var arc = d3.select("#bucket-arc")
-				.style("stroke-opacity", .5)
-				.style("stroke-dasharray", ("10,3"));
+				function decrement() {
+					seconds = seconds - 1;
+					min = Math.round(seconds / 60);
+					sec = seconds % 60;
+					stopwatch.text(pad(min,2) + ":" + pad(sec,2));
+					timer();
+				}
 
-			d3.transition().duration(10000).each(function() {
-				arc.transition().attr("r", 100);
-			});
+				function timer() {
+    				t = setTimeout(decrement, 1000);
+				}
+				timer(); // start countdown
 
-			var bucket = d3.select("#bucket");
-			d3.transition().duration(10000).each(function() {
-				bucket.transition().attr("cx", 30).attr("cy", 30);
-			});
+				var arc = d3.select("#bucket-arc")
+					.style("stroke-opacity", .5)
+					.style("stroke-dasharray", ("10,3"));
+
+				d3.transition().duration(10000).each(function() {
+					arc.transition().attr("r", 100);
+				});
+
+				var bucket = d3.select("#bucket");
+				d3.transition().duration(10000).each(function() {
+					bucket.transition().attr("cx", 30).attr("cy", 30);
+				});
+			}, false );
 
 			var boom = d3.select("#boom");
 			d3.transition().duration(10000).each(function() {
 				boom.transition().attr("x2", 80);
 			});
-		</script>
-
-		<script>
-			
 		</script>
 
 	</body>
