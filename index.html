@@ -105,14 +105,15 @@
   							<rect x="100" y="200" width="100" height="100" fill="green" />
   							<rect x="200" y="200" width="100" height="100" fill="green" />
 
-  							<line x1="145" y1="145" x2="200" y2="200" stroke="yellow" stroke-width="5"/>
-  							<rect x="140" y ="140" width="20" height="20" fill="yellow" />
+							<rect x="140" y ="140" width="20" height="20" fill="yellow" />
+  							<line id="boom" x1="150" y1="150" x2="200" y2="200" stroke="yellow" stroke-width="5"/>
   							
-  							<text id="stopwatch" x="450" y="100" font-family="sans-serif" font-size="100px" fill="red">##:##</text>
+  							<text id="stopwatch" x="420" y="100" font-family="sans-serif" font-size="100px" fill="red"></text>
 						</svg>
 					</section>
 					<section></section>
 				</section>
+				<section>Peripheral Visual Cue</section>
 				<section>
 					<h2>Analysis and Training</h2>
 					<ul>
@@ -145,12 +146,19 @@
 				]
 			});
 
-			var seconds = 10000;
+			var seconds = 200;
 			var stopwatch = d3.select("#stopwatch");
+
+			function pad(num, size) {
+				var s = "0000" + num;
+				return s.substr(s.length - size);
+			}
 
 			function decrement() {
 				seconds = seconds - 1;
-				stopwatch.text(seconds);
+				min = Math.round(seconds / 60);
+				sec = seconds % 60;
+				stopwatch.text(pad(min,2) + ":" + pad(sec,2));
 				timer();
 			}
 
@@ -170,6 +178,11 @@
 			var bucket = d3.select("#bucket");
 			d3.transition().duration(10000).each(function() {
 				bucket.transition().attr("cx", 30).attr("cy", 30);
+			});
+
+			var boom = d3.select("#boom");
+			d3.transition().duration(10000).each(function() {
+				boom.transition().attr("x2", 80);
 			});
 		</script>
 
