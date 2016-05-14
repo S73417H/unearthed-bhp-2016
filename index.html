@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>BHP Hackathon 2016 - Team Mother Load</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
@@ -22,34 +22,91 @@
 		</script>
 
 		<style>
-			.portrait {
-					width: 150px;
-					height: 150px;
-					border-radius: 150px;
-					-webkit-border-radius: 150px;
-					-moz-border-radius: 150px;
-					box-shadow: 0 0 0px rgba(0, 0, 0, .2);
-					-webkit-box-shadow: 0 0 0px rgba(0, 0, 0, .2);
-					-moz-box-shadow: 0 0 0px rgba(0, 0, 0, .2);
-			}
+
+		.people {
+			display: inline-block;
+		}
+
+		.people figure {
+			display: inline-block;
+		}
+
+		.people figcaption {
+			font-size: 14pt;
+			text-align: center;
+		}
+
+		.people figure img {
+				width: 120px;
+				height: 120px;
+				border-radius: 120px;
+				-webkit-border-radius: 120px;
+				-moz-border-radius: 120px;
+				box-shadow: 0 0 0px rgba(0, 0, 0, .2);
+				-webkit-box-shadow: 0 0 0px rgba(0, 0, 0, .2);
+				-moz-box-shadow: 0 0 0px rgba(0, 0, 0, .2);
+		}
 		</style>
 
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>
-					<h2 style="color: rgb(240, 95, 32)">Unearthed Hackathon</h2>
-					<h3>BHP MineHack Challenge</h3>
-					<img data-src="img/britto.jpg" class="portrait"/>
-					<img data-src="img/crisp.jpg" class="portrait"/>
-					<img data-src="img/fazio.jpg" class="portrait"/>
-					<img data-src="img/tognela.jpg" class="portrait"/>
-					<img data-src="img/silhouette.jpg" class="portrait"/>
+				<section data-background="img/front.jpg">
+					<h2>Unearthed Hackathon</h2>
+					<h4>BHP MineHack Challenge 2016</h4>
+					<div class="people">
+						<figure class="portrait"><img data-src="img/britto.jpg"/><figcaption>Adam Britto</figcaption></figure>
+						<figure class="portrait"><img data-src="img/crisp.jpg"/><figcaption>William Crisp</figcaption></figure>
+						<figure class="portrait"><img data-src="img/fazio.jpg"/><figcaption>Michael Fazio</figcaption></figure>
+						<figure class="portrait"><img data-src="img/tognela.jpg"/><figcaption>Nick Tognela</figcaption></figure>
+						<figure class="portrait"><img data-src="img/wende.jpg"/><figcaption>Leon Wende</figcaption></figure>
+						<figure class="portrait"><img data-src="img/silhouette.jpg"/><figcaption>Ben Hicks</figcaption></figure>
+					</div>
 				</section>
-				<section>Safety</section>
-				<section>Cost</section>
-				<section>Integration</section>
+				<section>
+					<img data-src="img/loader-minestar.png"/>
+				</section>
+				<section>
+					<h2>Less is More</h2>
+					<p class="fragment">Do we have what we want?</p>
+					<p class="fragment">Do we need what we have?</p>
+				</section>
+				<!--section data-background="img/ferrari-cockpit.jpg"></section-->
+				<!--section data-background="img/redbull-timing.jpg"></section-->
+				<section>
+					<section>Dynamic Contextual Display</section>
+					<section>
+						<table>
+							<tr>
+								<td>HIGH</td>
+								<td>HIGH</td>
+								<td>HIGH</td>
+							</tr>
+							<tr>
+								<td>HIGH</td>
+								<td>HIGH</td>
+								<td>HIGH</td>
+							</tr>
+							<tr>
+								<td>HIGH</td>
+								<td>HIGH</td>
+								<td>HIGH</td>
+							</tr>
+						</table>
+					</section>
+					<section></section>
+					<section></section>
+				</section>
+				<section>
+					<h2>Analysis and Training</h2>
+					<ul>
+						<li>Operator Dashboard</li>
+						<li>Tailored Training</li>
+						<li>Simulation</li>
+					</ul>
+				</section>
+				<section>Questions?</section>
 			</div>
 		</div>
 
@@ -60,14 +117,16 @@
 			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
 				history: true,
-				transition: 'convex',
+				
 
 				// More info https://github.com/hakimel/reveal.js#dependencies
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/external/external.js', condition: function() { return !!document.querySelector( '[data-external]' ); }},
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				
 				]
 			});
 		</script>
