@@ -46,6 +46,13 @@
 				-webkit-box-shadow: 0 0 0px rgba(0, 0, 0, .2);
 				-moz-box-shadow: 0 0 0px rgba(0, 0, 0, .2);
 		}
+
+		/* D3 Styles */
+		rect {
+  			stroke: #fff;
+  			stroke-width: .1px;
+		}
+
 		</style>
 
 	</head>
@@ -77,23 +84,25 @@
 				<section>
 					<section>Dynamic Contextual Display</section>
 					<section>
-						<table>
-							<tr>
-								<td>HIGH</td>
-								<td>HIGH</td>
-								<td>HIGH</td>
-							</tr>
-							<tr>
-								<td>HIGH</td>
-								<td>HIGH</td>
-								<td>HIGH</td>
-							</tr>
-							<tr>
-								<td>HIGH</td>
-								<td>HIGH</td>
-								<td>HIGH</td>
-							</tr>
-						</table>
+						<svg width="800" height="300">
+							<rect x="0" y="0" width="700" height="600" fill="black" />
+
+  							<rect x="0"   y="0" width="100" height="100" fill="green" />
+  							<rect x="100" y="0" width="100" height="100" fill="green" />
+  							<rect x="200" y="0" width="100" height="100" fill="green" />
+
+							<rect x="0"   y="100" width="100" height="100" fill="green" />
+  							<rect x="100" y="100" width="100" height="100" fill="green" />
+  							<rect x="200" y="100" width="100" height="100" fill="green" />
+
+							<rect x="0"   y="200" width="100" height="100" fill="green" />
+  							<rect x="100" y="200" width="100" height="100" fill="green" />
+  							<rect x="200" y="200" width="100" height="100" fill="green" />
+
+  							<rect x="125" y ="125" width="50" height="50" fill="yellow" />
+
+  							<text id="stopwatch" x="450" y="100" font-family="sans-serif" font-size="100px" fill="red">##:##</text>
+						</svg>
 					</section>
 					<section></section>
 					<section></section>
@@ -112,6 +121,7 @@
 
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.js"></script>
+		<script src="js/d3.min.js"></script>
 
 		<script>
 			// More info https://github.com/hakimel/reveal.js#configuration
@@ -126,9 +136,27 @@
 					{ src: 'plugin/notes/notes.js', async: true },
 					{ src: 'plugin/external/external.js', condition: function() { return !!document.querySelector( '[data-external]' ); }},
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				
 				]
 			});
+
+			var seconds = 10000;
+			var stopwatch = d3.select("#stopwatch");
+
+			function decrement() {
+				seconds = seconds - 1;
+				stopwatch.text(seconds);
+				timer();
+			}
+
+			function timer() {
+    			t = setTimeout(decrement, 1000);
+			}
+			timer(); // start countdown
 		</script>
+
+		<script>
+			
+		</script>
+
 	</body>
 </html>
