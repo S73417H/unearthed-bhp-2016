@@ -127,7 +127,7 @@ public class LoadingScreen implements Screen, ControllerListener{
 
         if (countDown <= 10)
         {
-
+            timerFont.setColor(Color.RED);
         }
 
         timerFont.draw (spriteBatch, timeString, 200, 180);
