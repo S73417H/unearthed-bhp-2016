@@ -38,8 +38,8 @@ public class LoadingScreen implements Screen, ControllerListener{
     private int bucketTranslateRate = 2;
     private float bucketRotateRate = 1;
     private float bucketPositionY;
-    private float lineThickness = 5;
-    private float lineHalfLength = 15;
+    private float lineThickness = 3;
+    private float lineHalfLength = 10;
     private float rotationSpeed = 0.5f;
     private int bucketMinDistanceFromCab = 50;
     private int bucketMaxDistanceFromCab = 200;
@@ -64,7 +64,7 @@ public class LoadingScreen implements Screen, ControllerListener{
     float bucketTranslateAmount = 0;
     float bucketRotateAmount = 0;
     private String timeString;
-    private float countDown= 120f;
+    private float countDown= 20f;
 
     public LoadingScreen(SpriteBatch spriteBatch) {
         this.spriteBatch = spriteBatch;
@@ -124,6 +124,12 @@ public class LoadingScreen implements Screen, ControllerListener{
         // Timer
         spriteBatch.begin();
         timeString = calcTime();
+
+        if (countDown <= 10)
+        {
+
+        }
+
         timerFont.draw (spriteBatch, timeString, 200, 180);
         spriteBatch.end();
         // Dividing line
@@ -144,11 +150,14 @@ public class LoadingScreen implements Screen, ControllerListener{
 
         shapeRenderer.set(ShapeRenderer.ShapeType.Line);
 
-        shapeRenderer.setColor(Color.WHITE);
-
         // Draw the cab
-        shapeRenderer.circle(excavatorCenterX, halfScreenHeight, 20);
+        shapeRenderer.setColor(Color.YELLOW);
+        shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.rect(excavatorCenterX-15, halfScreenHeight-15, 30, 30);
+        shapeRenderer.set(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.circle(optimalPositionVector.x, optimalPositionVector.y, 20);
+
 
         // Draw the current arc of the arm
         shapeRenderer.circle(excavatorCenterX, halfScreenHeight, bucketPositionY - halfScreenHeight);
@@ -159,8 +168,11 @@ public class LoadingScreen implements Screen, ControllerListener{
             shapeRenderer.setColor(Color.GREEN);
         }
 
-        shapeRenderer.rectLine(excavatorCenterX - lineHalfLength,bucketPositionY, excavatorCenterX + lineHalfLength, bucketPositionY, lineThickness);
-        shapeRenderer.rectLine(excavatorCenterX, bucketPositionY - lineHalfLength, excavatorCenterX, bucketPositionY + lineHalfLength, lineThickness);
+        // Bucket
+        // Base
+        int bucketWidth = 20;
+        shapeRenderer.rect
+                (excavatorCenterX - lineHalfLength, bucketPositionY - lineHalfLength,bucketWidth,bucketWidth);
 
         if(controller != null)
         {
