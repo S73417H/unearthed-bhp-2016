@@ -39,6 +39,8 @@ public class LoadingScreen implements Screen, ControllerListener{
     private int bucketMinDistanceFromCab = 50;
     private int bucketMaxDistanceFromCab = 200;
 
+    private float bucketNearIdealThreshold = 10;
+
     private Vector2 optimalPositionVector;
 
     private final SpriteBatch spriteBatch;
@@ -103,6 +105,11 @@ public class LoadingScreen implements Screen, ControllerListener{
         shapeRenderer.circle(halfScreenWidth, halfScreenHeight, bucketPositionY - halfScreenHeight);
         shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
 
+        if(isBucketNearOptimal())
+        {
+            shapeRenderer.setColor(Color.GREEN);
+        }
+
         shapeRenderer.rectLine(halfScreenWidth - lineHalfLength,bucketPositionY, halfScreenWidth + lineHalfLength, bucketPositionY, lineThickness);
         shapeRenderer.rectLine(halfScreenWidth, bucketPositionY - lineHalfLength, halfScreenWidth, bucketPositionY + lineHalfLength, lineThickness);
 
@@ -121,6 +128,12 @@ public class LoadingScreen implements Screen, ControllerListener{
         double rotatedX = Math.cos(angle) * (optimalPositionVector.x - centerPointVector.x) - Math.sin(angle) * (optimalPositionVector.y-centerPointVector.y) + centerPointVector.x;
         double rotatedY = Math.sin(angle) * (optimalPositionVector.x - centerPointVector.x) + Math.cos(angle) * (optimalPositionVector.y - centerPointVector.y) + centerPointVector.y;
         optimalPositionVector.set((float)rotatedX, (float)rotatedY);
+    }
+
+    private boolean isBucketNearOptimal()
+    {
+        return Math.abs(bucketPositionY - optimalPositionVector.y) < bucketNearIdealThreshold &&
+                Math.abs(optimalPositionVector.x - halfScreenWidth) < bucketNearIdealThreshold;
     }
 
     public void handleInput()
