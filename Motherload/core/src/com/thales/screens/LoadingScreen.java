@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import com.thales.controllers.XboxOnePad;
 
 /**
@@ -24,7 +23,7 @@ public class LoadingScreen implements Screen, ControllerListener{
 
     private int screenWidth;
     private int screenHeight;
-    private int halfScreenWidth;
+    private int excavatorCenterX;
     private int halfScreenHeight;
     private double gamepadAxisMovementThreshold = 0.2;
 
@@ -64,13 +63,13 @@ public class LoadingScreen implements Screen, ControllerListener{
 
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
-        halfScreenWidth = screenWidth / 2;
+        excavatorCenterX = screenWidth / 3;
         halfScreenHeight = screenHeight / 2;
 
-        centerPointVector = new Vector2(halfScreenWidth, halfScreenHeight);
-        optimalPositionVector = new Vector2(halfScreenWidth, halfScreenHeight + 100);
+        centerPointVector = new Vector2(excavatorCenterX, halfScreenHeight);
+        optimalPositionVector = new Vector2(excavatorCenterX - 130, halfScreenHeight + 30);
 
-        bucketPositionY = halfScreenWidth;
+        bucketPositionY = excavatorCenterX;
 
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setColor(Color.WHITE);
@@ -93,16 +92,21 @@ public class LoadingScreen implements Screen, ControllerListener{
         spriteBatch.begin();
         spriteBatch.end();
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        shapeRenderer.setColor(Color.DARK_GRAY);
+        shapeRenderer.rect(0, 0, excavatorCenterX * 2, screenHeight);
+
+        shapeRenderer.set(ShapeRenderer.ShapeType.Line);
 
         shapeRenderer.setColor(Color.WHITE);
 
         // Draw the cab
-        shapeRenderer.circle(halfScreenWidth, halfScreenHeight, 20);
+        shapeRenderer.circle(excavatorCenterX, halfScreenHeight, 20);
         shapeRenderer.circle(optimalPositionVector.x, optimalPositionVector.y, 20);
 
         // Draw the current arc of the arm
-        shapeRenderer.circle(halfScreenWidth, halfScreenHeight, bucketPositionY - halfScreenHeight);
+        shapeRenderer.circle(excavatorCenterX, halfScreenHeight, bucketPositionY - halfScreenHeight);
         shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
 
         if(isBucketNearOptimal())
@@ -110,8 +114,8 @@ public class LoadingScreen implements Screen, ControllerListener{
             shapeRenderer.setColor(Color.GREEN);
         }
 
-        shapeRenderer.rectLine(halfScreenWidth - lineHalfLength,bucketPositionY, halfScreenWidth + lineHalfLength, bucketPositionY, lineThickness);
-        shapeRenderer.rectLine(halfScreenWidth, bucketPositionY - lineHalfLength, halfScreenWidth, bucketPositionY + lineHalfLength, lineThickness);
+        shapeRenderer.rectLine(excavatorCenterX - lineHalfLength,bucketPositionY, excavatorCenterX + lineHalfLength, bucketPositionY, lineThickness);
+        shapeRenderer.rectLine(excavatorCenterX, bucketPositionY - lineHalfLength, excavatorCenterX, bucketPositionY + lineHalfLength, lineThickness);
 
         if(controller != null)
         {
@@ -133,7 +137,7 @@ public class LoadingScreen implements Screen, ControllerListener{
     private boolean isBucketNearOptimal()
     {
         return Math.abs(bucketPositionY - optimalPositionVector.y) < bucketNearIdealThreshold &&
-                Math.abs(optimalPositionVector.x - halfScreenWidth) < bucketNearIdealThreshold;
+                Math.abs(optimalPositionVector.x - excavatorCenterX) < bucketNearIdealThreshold;
     }
 
     public void handleInput()
