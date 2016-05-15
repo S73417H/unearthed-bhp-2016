@@ -4,9 +4,10 @@ View the [Slideshow Presentation here](http://s73417h.github.io/unearthed-bhp-20
 
 # Authors
 
-* Michael Fazio
+* Adam Britto
 * William Crisp
+* Michael Fazio
+* Ben Hicks
 * Nick Tognela
 * Leon Wende
-* Ben Hicks
 
