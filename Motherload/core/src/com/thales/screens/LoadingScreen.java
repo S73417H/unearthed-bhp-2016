@@ -169,7 +169,6 @@ public class LoadingScreen implements Screen, ControllerListener{
         }
 
         // Bucket
-        // Base
         int bucketWidth = 20;
         shapeRenderer.rect
                 (excavatorCenterX - lineHalfLength, bucketPositionY - lineHalfLength,bucketWidth,bucketWidth);
