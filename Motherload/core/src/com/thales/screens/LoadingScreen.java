@@ -35,8 +35,8 @@ public class LoadingScreen implements Screen, ControllerListener{
 
     private Vector2 centerPointVector;
 
-    private int bucketTranslateRate = 2;
-    private float bucketRotateRate = 1;
+    private float bucketTranslateRate = 1f;
+    private float bucketRotateRate = 1f;
     private float bucketPositionY;
     private float lineThickness = 3;
     private float lineHalfLength = 10;
@@ -73,7 +73,7 @@ public class LoadingScreen implements Screen, ControllerListener{
     @Override
     public void show() {
         Controllers.addListener(this);
-    createFonts();
+        createFonts();
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
         excavatorCenterX = screenWidth / 3;
@@ -173,11 +173,11 @@ public class LoadingScreen implements Screen, ControllerListener{
         shapeRenderer.rect
                 (excavatorCenterX - lineHalfLength, bucketPositionY - lineHalfLength,bucketWidth,bucketWidth);
 
-        if(controller != null)
-        {
-            shapeRenderer.setColor(Color.GREEN);
-            shapeRenderer.circle(20, 20, 5);
-        }
+//        if(controller != null)
+//        {
+//            shapeRenderer.setColor(Color.GREEN);
+//            shapeRenderer.circle(20, 20, 5);
+//        }
 
         shapeRenderer.end();
     }
@@ -263,7 +263,7 @@ public class LoadingScreen implements Screen, ControllerListener{
 
     @Override
     public void hide() {
-
+        Controllers.clearListeners();
     }
 
     @Override
