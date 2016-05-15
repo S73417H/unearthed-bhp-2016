@@ -10,12 +10,15 @@ import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import com.thales.controllers.XboxOnePad;
+
+import sun.java2d.pipe.TextRenderer;
 
 /**
  * Created by choco on 14/05/2016.
@@ -26,6 +29,9 @@ public class LoadingScreen implements Screen, ControllerListener{
     private int screenHeight;
     private int halfScreenWidth;
     private int halfScreenHeight;
+    private int topRightX;
+    private int topRightY;
+
     private double gamepadAxisMovementThreshold = 0.2;
 
     private Vector2 centerPointVector;
@@ -49,6 +55,10 @@ public class LoadingScreen implements Screen, ControllerListener{
 
     private Controller controller = null;
 
+    private int truckId;
+    private String truckIdString;
+    BitmapFont bitmapFont;
+
     double angle = 0;
 
     float bucketTranslateAmount = 0;
@@ -67,6 +77,9 @@ public class LoadingScreen implements Screen, ControllerListener{
         halfScreenWidth = screenWidth / 2;
         halfScreenHeight = screenHeight / 2;
 
+        topRightX = (screenWidth / 4) ;
+        topRightY = (screenHeight / 4) ;
+
         centerPointVector = new Vector2(halfScreenWidth, halfScreenHeight);
         optimalPositionVector = new Vector2(halfScreenWidth, halfScreenHeight + 100);
 
@@ -78,6 +91,11 @@ public class LoadingScreen implements Screen, ControllerListener{
 
         orthographicCamera = new OrthographicCamera(screenWidth, screenHeight);
         spriteBatch.setProjectionMatrix(orthographicCamera.combined);
+
+        truckId = 42;
+        truckIdString = "Truck ID: " + truckId;
+        bitmapFont = new BitmapFont();
+        bitmapFont.setColor(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
     @Override
@@ -91,6 +109,8 @@ public class LoadingScreen implements Screen, ControllerListener{
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
+
+        bitmapFont.draw (spriteBatch, truckIdString, topRightX, topRightY);
         spriteBatch.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -98,7 +118,7 @@ public class LoadingScreen implements Screen, ControllerListener{
         shapeRenderer.setColor(Color.WHITE);
 
         // Draw the cab
-        shapeRenderer.circle(halfScreenWidth, halfScreenHeight, 20);
+        shapeRenderer.rect(halfScreenWidth-10, halfScreenHeight-10,20, 20);
         shapeRenderer.circle(optimalPositionVector.x, optimalPositionVector.y, 20);
 
         // Draw the current arc of the arm
