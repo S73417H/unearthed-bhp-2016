@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Timer;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import com.thales.controllers.XboxOnePad;
 
@@ -63,6 +64,8 @@ public class LoadingScreen implements Screen, ControllerListener{
 
     float bucketTranslateAmount = 0;
     float bucketRotateAmount = 0;
+    private String timeString;
+    private float countDown= 120f;
 
     public LoadingScreen(SpriteBatch spriteBatch) {
         this.spriteBatch = spriteBatch;
@@ -77,8 +80,9 @@ public class LoadingScreen implements Screen, ControllerListener{
         halfScreenWidth = screenWidth / 2;
         halfScreenHeight = screenHeight / 2;
 
-        topRightX = (screenWidth / 4) ;
-        topRightY = (screenHeight / 4) ;
+        int leftSpacer = 10;
+        topRightX = (screenWidth / 3 + leftSpacer) ;
+        topRightY = (screenHeight / 3 + leftSpacer) ;
 
         centerPointVector = new Vector2(halfScreenWidth, halfScreenHeight);
         optimalPositionVector = new Vector2(halfScreenWidth, halfScreenHeight + 100);
@@ -110,7 +114,9 @@ public class LoadingScreen implements Screen, ControllerListener{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
 
-        bitmapFont.draw (spriteBatch, truckIdString, topRightX, topRightY);
+        timeString = calcTime();
+        bitmapFont.draw (spriteBatch, timeString, topRightX, topRightY);
+        bitmapFont.draw (spriteBatch, truckIdString, topRightX, topRightY-20);
         spriteBatch.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -140,6 +146,15 @@ public class LoadingScreen implements Screen, ControllerListener{
         }
 
         shapeRenderer.end();
+    }
+
+    private String calcTime() {
+        float delta = Gdx.graphics.getDeltaTime();
+        countDown -= delta;
+
+        int minutes = (int)countDown / 60;
+        int seconds = (int)countDown % 60;
+        return (minutes + ":" + String.format("%02d",(seconds)));
     }
 
     private void updateOptimalBucketPosition()
